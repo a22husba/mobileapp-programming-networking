@@ -1,29 +1,29 @@
 package com.example.networking;
 
 public class Mountain {
-    string name;
-    string location;
+    String name;
+    String location;
     int image;
 
-    public Mountain(string name, string location, int image) {
+    public Mountain(String name, String location, int image) {
         this.name = name;
         this.location = location;
         this.image = image;
     }
 
-    public string getName() {
+    public CharSequence getName() {
         return name;
     }
 
-    public void setName(string name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public string getLocation() {
+    public CharSequence getLocation() {
         return location;
     }
 
-    public void setLocation(string location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 

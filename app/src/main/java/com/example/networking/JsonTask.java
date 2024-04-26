@@ -10,24 +10,27 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class JsonTask extends AsyncTask<String, String, String> {
+public class JsonTask extends AsyncTask<Void, Void, String> {
+
+    private static final String JSON_URL = "https://raw.githubusercontent.com/ianmiell/peaks/master/peaks.json";
 
     public interface JsonTaskListener {
         void onPostExecute(String json);
     }
 
-    private HttpURLConnection connection = null;
-    private BufferedReader reader = null;
-    private final JsonTaskListener listener;
+    private JsonTaskListener listener;
 
-    @SuppressWarnings("deprecation")
     public JsonTask(JsonTaskListener listener) {
         this.listener = listener;
     }
 
-    protected String doInBackground(String... params) {
+    @Override
+    protected String doInBackground(Void... voids) {
+        HttpURLConnection connection = null;
+        BufferedReader reader = null;
+
         try {
-            URL url = new URL(params[0]);
+            URL url = new URL(JSON_URL);
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();
 
@@ -36,12 +39,10 @@ public class JsonTask extends AsyncTask<String, String, String> {
 
             StringBuilder builder = new StringBuilder();
             String line;
-            while ((line = reader.readLine()) != null && !isCancelled()) {
+            while ((line = reader.readLine()) != null) {
                 builder.append(line).append("\n");
             }
             return builder.toString();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -61,6 +62,8 @@ public class JsonTask extends AsyncTask<String, String, String> {
 
     @Override
     protected void onPostExecute(String json) {
-        listener.onPostExecute(json);
+        if (json != null) {
+            listener.onPostExecute(json);
+        }
     }
 }

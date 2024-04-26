@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
@@ -17,7 +18,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/name"
         android:layout_toEndOf="@id/imageview"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="#350E8E"
         android:textSize="20sp"
         tools:text='Name'/>
 
@@ -27,9 +28,16 @@
         android:id="@+id/location"
         android:layout_toEndOf="@id/imageview"
         android:layout_below="@id/name"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="#350E8E"
         android:textSize="20sp"
-        tools:text='Location'
+        tools:text='Location' />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/imageview"
+        android:layout_marginTop="10dp"
+        android:background="#121113"
 
         />
 

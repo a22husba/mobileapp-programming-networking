@@ -1,42 +1,33 @@
+Först så skapads en klass med namnet “Mountain” och sen lade till klasser attribut
+namn och plats,  därefter konstruktor, samt getter och setter för dessa attribut.
+Sedan skaps mountain_view layout, så att varie mountain kan ha en enda layout
+Lade en Recycler View till i layoutfilen för aktiviteten, och skapdes alla java classes.
+Därefter för Rycyclerview behövs Viewholder och Adapterholder, och då skapas två klasser för var
+och en av dem. Sen la till mountain listan från Json filen. använde getjson metod som hämtar 
+Json-data från Json-URl.lägger till dem bergen med andra skapdes berg, så att dem visas i samma
+lista.
 
-# Rapport
+Den här koden använder en AsyncTask för att hämta Json-data som konventerar datan till en lista 
+över bergobjekt med hjälp av Gson Bibliotektet.
 
-**Skriv din rapport här!*
+public void onPostExecute(String json) {
+Log.d("MainActivity", ""+json);
+Gson gson = new Gson();
+Type type = new TypeToken<List<Mountain>>(){}.getType();
+List<Mountain> mountains= gson.fromJson(json, type);
 
-_Du kan ta bort all text som finns sedan tidigare_.
+         RecyclerView recyclerView = findViewById(R.id.recycler_view);
+         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+         recyclerView.setAdapter(new MyAdapter(getApplicationContext(), mountains));
 
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
-
-```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
     }
+    private void getJson() {
+        new JsonFile(this, this).execute(JSON_FILE);
+    }
+
 }
-```
 
-Bilder läggs i samma mapp som markdown-filen.
 
-![](android.png)
 
-Läs gärna:
 
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+![img.png](img.png)

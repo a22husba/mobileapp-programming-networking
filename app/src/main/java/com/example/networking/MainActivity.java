@@ -7,13 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
 
-    private final String JSON_URL = "HTTPS_URL_TO_JSON_DATA_CHANGE_THIS_URL";
+    private final String JSON_URL = "https://mobprog.webug.se/json-api?login=brom";
     private final String JSON_FILE = "mountains.json";
 
     @Override
@@ -24,10 +27,10 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         List<Mountain> mountains = new ArrayList<Mountain>();
-        mountains.add(new Mountain("Alp","France", R.drawable.a));
-        mountains.add(new Mountain("zero","Sweden",R.drawable.b));
-        mountains.add(new Mountain("One","Germany",R.drawable.f));
-        mountains.add(new Mountain("Two","",R.drawable.d));
+       // mountains.add(new Mountain("Alp","France", R.drawable.a));
+        // mountains.add(new Mountain("zero","Sweden",R.drawable.b));
+        // mountains.add(new Mountain("One","Germany",R.drawable.f));
+        // mountains.add(new Mountain("Two","",R.drawable.d));
 
 
 
@@ -40,7 +43,18 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     @Override
     public void onPostExecute(String json) {
-        Log.d("MainActivity", json);
+        Log.d("MainActivity", ""+json);
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Mountain>>(){}.getType();
+         List<Mountain> mountains= gson.fromJson(json, type);
+
+         RecyclerView recyclerView = findViewById(R.id.recycler_view);
+         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+         recyclerView.setAdapter(new MyAdapter(getApplicationContext(), mountains));
+
+    }
+    private void getJson() {
+        new JsonFile(this, this).execute(JSON_FILE);
     }
 
 }
